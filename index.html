@@ -28,10 +28,26 @@
 <input type="button" name="" value="Durum Göster" onclick="CheckLoginStatus()">
 <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="true" onlogin="window.location='http://localhost/facebookapp/index.html';"></div>
 <p></p>
+<input type="button" name="" value="Facebook ile Giriş" onclick="Login()">
+<input type="button" name="" value="Çıkış" onclick="Logout()" style="display: none;">
 <script>
     function CheckLoginStatus(){
         FB.getLoginStatus(function(response) {
             console.log(response);
+        });
+    }
+
+    function Login(){
+        FB.login(function(response){
+            document.getElementsByTagName('input')[1].style.display = 'none';
+            document.getElementsByTagName('input')[2].style.display = 'inline';
+        });
+    }
+
+    function Logout(){
+        FB.logout(function(response){
+            document.getElementsByTagName('input')[1].style.display = 'inline';
+            document.getElementsByTagName('input')[2].style.display = 'none';
         });
     }
 </script>
