@@ -30,6 +30,8 @@
 <p></p>
 <input type="button" name="" value="Facebook ile Giriş" onclick="Login()">
 <input type="button" name="" value="Çıkış" onclick="Logout()" style="display: none;">
+<input type="button" name="" value="Bilgileri Göster" onclick="GetInfo()">
+<p></p>
 <script>
     function CheckLoginStatus(){
         FB.getLoginStatus(function(response) {
@@ -41,7 +43,7 @@
         FB.login(function(response){
             document.getElementsByTagName('input')[1].style.display = 'none';
             document.getElementsByTagName('input')[2].style.display = 'inline';
-        });
+        }, {scope: 'public_profile, email'});
     }
 
     function Logout(){
@@ -49,6 +51,12 @@
             document.getElementsByTagName('input')[1].style.display = 'inline';
             document.getElementsByTagName('input')[2].style.display = 'none';
         });
+    }
+
+    function GetInfo(){
+        FB.api('/me', 'GET', {fields: 'id, name, picture, email'}, function(response){
+            document.getElementsByTagName('p')[1].innerHTML = 'ID: ' + response.id + ' Adı: ' + response.name + ' email: ' + response.email;
+        });     
     }
 </script>
     </body>
