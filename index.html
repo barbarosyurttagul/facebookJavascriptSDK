@@ -26,41 +26,11 @@
 </script>
 
 <input type="button" name="" value="Durum Göster" onclick="CheckLoginStatus()">
-<div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="true" onlogin="window.location='http://localhost/facebookapp/index.html';"></div>
-<p></p>
-<input type="button" name="" value="Facebook ile Giriş" onclick="Login()">
-<input type="button" name="" value="Çıkış" onclick="Logout()" style="display: none;">
-<input type="button" name="" value="Bilgileri Göster" onclick="GetInfo()">
-<p></p>
-<img src=''>
 <script>
     function CheckLoginStatus(){
         FB.getLoginStatus(function(response) {
             console.log(response);
         });
-    }
-
-    function Login(){
-        FB.login(function(response){
-            document.getElementsByTagName('input')[1].style.display = 'none';
-            document.getElementsByTagName('input')[2].style.display = 'inline';
-        }, {scope: 'public_profile, email'});
-    }
-
-    function Logout(){
-        FB.logout(function(response){
-            document.getElementsByTagName('input')[1].style.display = 'inline';
-            document.getElementsByTagName('input')[2].style.display = 'none';
-        });
-    }
-
-    function GetInfo(){
-        FB.api('/me', 'GET', {fields: 'id, name, picture, email'}, function(response){
-            document.getElementsByTagName('p')[1].innerHTML = 'ID: ' + response.id + ' Adı: ' + response.name + ' email: ' + response.email;
-            var imgsrc = response.picture.data.url;
-            document.querySelector('img').setAttribute('src', imgsrc);
-            console.log(response.picture);
-        });     
     }
 </script>
     </body>
