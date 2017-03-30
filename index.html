@@ -26,7 +26,8 @@
 </script>
 
 <input type="button" name="" value="Durum Göster" onclick="CheckLoginStatus()">
-
+<div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="true" onlogin="window.location='http://localhost/facebookapp/index.html';"></div>
+<p></p>
 <script>
     function CheckLoginStatus(){
         FB.getLoginStatus(function(response) {
