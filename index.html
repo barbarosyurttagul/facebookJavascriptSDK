@@ -3,13 +3,17 @@
     <head>
         <title></title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
     </head>
     <body>
     <script>
   window.fbAsyncInit = function() {
     FB.init({
-      appId      : 'your-app-id',
+      appId      : '388653944852290',
       xfbml      : true,
       version    : 'v2.8'
     });
@@ -33,18 +37,19 @@
 <input type="button" name="" value="Bilgileri Göster" onclick="GetInfo()">
 <p></p>
 <img src=''>
+<p></p>
 <script>
     function CheckLoginStatus(){
         FB.getLoginStatus(function(response) {
             console.log(response);
-        });
+            document.getElementsByTagName('p')[0].innerHTML = 'Status: ' + response.status + 'UserId :' + response.authResponse.userID;
+});
     }
-
     function Login(){
         FB.login(function(response){
             document.getElementsByTagName('input')[1].style.display = 'none';
             document.getElementsByTagName('input')[2].style.display = 'inline';
-        }, {scope: 'public_profile, email'});
+}, {scope: 'public_profile, email, user_friends'});
     }
 
     function Logout(){
@@ -55,13 +60,20 @@
     }
 
     function GetInfo(){
-        FB.api('/me', 'GET', {fields: 'id, name, picture, email'}, function(response){
+        FB.api('/me', 'GET', {fields: 'id, name, picture, email, friends'}, function(response){
             document.getElementsByTagName('p')[1].innerHTML = 'ID: ' + response.id + ' Adı: ' + response.name + ' email: ' + response.email;
             var imgsrc = response.picture.data.url;
             document.querySelector('img').setAttribute('src', imgsrc);
-            console.log(response.picture);
-        });     
+            console.log(response.friends);
+            var result = '';
+            $.each(response.friends.data, function(index, value){
+                result += value.name + ' ' + '<img src=http://graph.facebook.com/' + value.id + "/picture?type=normal>";
+            });
+            document.getElementsByTagName('p')[2].innerHTML = result;
+        });
+        
     }
+    
 </script>
     </body>
 </html>
